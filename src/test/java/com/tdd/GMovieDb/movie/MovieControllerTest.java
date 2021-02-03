@@ -1,48 +1,26 @@
 package com.tdd.GMovieDb.movie;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import static org.mockito.Mockito.verify;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.assertj.core.api.Assertions.assertThat;
-
-@SpringBootTest
-@AutoConfigureMockMvc
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@ExtendWith(MockitoExtension.class)
 public class MovieControllerTest {
 
-    @Autowired
-    MockMvc mockMvc;
-
-    @Autowired
+    @Mock
     MovieRepository movieRepository;
 
-    ObjectMapper objectMapper;
-
-    @BeforeEach
-    public void setUp(){
-        objectMapper = new ObjectMapper();
-    }
+    @InjectMocks
+    MovieService movieService;
 
     @Test
-    public void getAllMovieList() throws Exception {
+    public void addMovie(){
         MovieDto movieDto = new MovieDto("Unbreakable");
-        movieRepository.save(new MovieEntity(movieDto.getMovieName()));
-
-        mockMvc.perform(get("/getMovieList"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("length()").value(1))
-                .andExpect(jsonPath("[0].movieName").value("Unbreakable"));
+        movieService.addMovieList(movieDto);
+        verify(movieRepository).save(new MovieEntity(movieDto.getMovieName()));
     }
 }
