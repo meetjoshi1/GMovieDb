@@ -7,11 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Objects;
 
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode
 @NoArgsConstructor
 public class MovieEntity {
 
@@ -30,5 +30,19 @@ public class MovieEntity {
 
     public void setMovieName(String movieName) {
         this.movieName = movieName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof MovieEntity)) return false;
+        MovieEntity that = (MovieEntity) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(getMovieName(), that.getMovieName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, getMovieName());
     }
 }

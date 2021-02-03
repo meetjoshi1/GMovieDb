@@ -6,7 +6,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class MovieControllerTest {
@@ -22,5 +28,23 @@ public class MovieControllerTest {
         MovieDto movieDto = new MovieDto("Unbreakable");
         movieService.addMovieList(movieDto);
         verify(movieRepository).save(new MovieEntity(movieDto.getMovieName()));
+    }
+
+    @Test
+    public void getMovieList(){
+        when(movieRepository.findAll()).thenReturn(List.of(new MovieEntity("Unbreakable")));
+        System.out.println(movieRepository.findAll().get(0).getMovieName());
+
+        List<MovieDto> expectedMovieList = movieRepository.findAll()
+                                                           .stream()
+                                                           .map(movieEntity -> {
+                                                               System.out.println("^^^&&^*&*** "+movieEntity.getMovieName());
+                                                               return new MovieDto(movieEntity.getMovieName());
+                                                           })
+                                                           .collect(Collectors.toList());
+
+        List<MovieDto> actualMovieList = movieService.getMovieList();
+
+        assertThat(actualMovieList).isEqualTo(expectedMovieList);
     }
 }
