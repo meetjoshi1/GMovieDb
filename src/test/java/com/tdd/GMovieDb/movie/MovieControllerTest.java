@@ -33,12 +33,10 @@ public class MovieControllerTest {
     @Test
     public void getMovieList(){
         when(movieRepository.findAll()).thenReturn(List.of(new MovieEntity("Unbreakable")));
-        System.out.println(movieRepository.findAll().get(0).getMovieName());
 
         List<MovieDto> expectedMovieList = movieRepository.findAll()
                                                            .stream()
                                                            .map(movieEntity -> {
-                                                               System.out.println("^^^&&^*&*** "+movieEntity.getMovieName());
                                                                return new MovieDto(movieEntity.getMovieName());
                                                            })
                                                            .collect(Collectors.toList());

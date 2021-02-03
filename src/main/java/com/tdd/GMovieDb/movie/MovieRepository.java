@@ -7,6 +7,4 @@ import java.util.List;
 
 @Repository
 public interface MovieRepository extends JpaRepository<MovieEntity,Long> {
-
-//    List<MovieEntity> findByName(String movieName);
 }

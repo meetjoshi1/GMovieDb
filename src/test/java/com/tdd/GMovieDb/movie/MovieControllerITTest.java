@@ -46,5 +46,5 @@ public class MovieControllerITTest {
                 .andExpect(jsonPath("[0].movieName").value("Unbreakable"));
     }
 
-
+    
 }

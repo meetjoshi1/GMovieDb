@@ -1,9 +1,5 @@
 package com.tdd.GMovieDb.movieDetail;
 
-import com.tdd.GMovieDb.movie.MovieDto;
-import lombok.Value;
-
-import java.util.List;
 import java.util.Objects;
 
 public class MovieDetailsDto {
@@ -15,7 +11,7 @@ public class MovieDetailsDto {
     private  String description;
     private  String rating;
 
-    public MovieDetailsDto() {
+    public MovieDetailsDto(String title, String director) {
     }
 
     public MovieDetailsDto(String title, String director, String actors, String release, String description, String rating) {

@@ -15,12 +15,10 @@ public class MovieService {
     }
 
     public List<MovieDto> getMovieList() {
-        List<MovieDto> collect = movieRepository.findAll()
+        return  movieRepository.findAll()
                 .stream()
                 .map(movieEntity -> new MovieDto(movieEntity.getMovieName()))
                 .collect(Collectors.toList());
-
-        return collect;
     }
 
     public void addMovieList(MovieDto movieDto) {
